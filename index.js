@@ -12,6 +12,15 @@ app.get('/', (req, res) => {
   res.send('ok');
 });
 
+app.get('/test', (req, res) => {
+    res.status(200).send('message:"ok"');
+  });
+  var date=new Date();
+  app.get('/time', (req, res) => {
+    res.status(200).send(date.getHours()+":"+date.getMinutes()+":"+date.getSeconds());
+  });
+
+
 // make the server listen to requests
 app.listen(PORT, () => {
   console.log(`Server running at: http://localhost:${PORT}/`);
