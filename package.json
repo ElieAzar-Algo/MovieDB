@@ -1,0 +1,31 @@
+{
+  "name": "eliedb",
+  "version": "1.0.0",
+  "description": "first test",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+   
+   "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1", 
+    "dev": "nodemon index.js"
+},
+
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ElieAzar-Algo/MovieDB.git"
+  },
+  "author": "elie azar",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ElieAzar-Algo/MovieDB/issues"
+  },
+  "homepage": "https://github.com/ElieAzar-Algo/MovieDB#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
