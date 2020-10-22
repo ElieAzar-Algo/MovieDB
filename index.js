@@ -134,7 +134,35 @@ app.get('/movies/delete/:id', (req, res) => {
   }
 });
 
+//--------------------------------------step 10----------------------------------------------------//
+///movies/update/<ID>?title=<NEW_TITLE>  /movies/update/<ID>?title=<NEW_TITLE>&rating=<NEW_RATING> //
+//-------------------------------------------------------------------------------------------------//
 
+app.get('/movies/update/:id', (req, res) => {
+  const selectId=(req.params.id)-1;
+  const newTitle=req.query.title;
+  const newRating=req.query.rating;
+
+
+  if(!movies[selectId]){
+    res.status(404).send({error:true,message:"the movie "+(selectId+1)+' does not exist '});}
+    
+    else if ((newTitle==""||newTitle==undefined)&&(newRating==""||newRating==undefined)){
+      res.status(200).send({data:movies});
+    }
+    else if(newTitle==""||newTitle==undefined){
+        movies[selectId].rating=newRating;
+        res.status(200).send({data:movies});
+      }
+      else if(newRating==""||newRating==undefined){
+        movies[selectId].title=newTitle;
+        res.status(200).send({data:movies});
+      }else{
+        movies[selectId].title=newTitle;
+        movies[selectId].rating=newRating;
+        res.status(200).send({data:movies});
+      }
+});
 
 
 
