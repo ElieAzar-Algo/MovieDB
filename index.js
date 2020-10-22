@@ -62,11 +62,9 @@ const movies = [{
     rating: 6.2
   }
 ];
-
-app.get('/movie/create', (req, res) => {
-  res.status(200).send(' ')
-});
-
+//-------------------------step 6-----------------------------------------//
+///movies/read/by-date    /movies/read/by-rating    /movies/read/by-title //
+//------------------------------------------------------------------------//
 app.get('/movie/read/:action', (req, res) => {
 
   if (req.params.action == "by-date") {
@@ -86,16 +84,9 @@ app.get('/movie/read/:action', (req, res) => {
     res.status(200).send("error");
   }
 });
-
-app.get('/movie/create', (req, res) => {
-  res.status(200).send('error');
-});
-
-app.get('/movie/delete', (req, res) => {
-  res.status(200).send(' ')
-});
-
-
+//-------------------------step 7-----------------------------------------//
+//                     /movies/read/id/<ID>                               //
+//------------------------------------------------------------------------//
 
 app.get('/movies/read/id/:id', (req, res) => {
   let id=(req.params.id)-1;
@@ -105,31 +96,34 @@ app.get('/movies/read/id/:id', (req, res) => {
     res.status(200).send(movies[id]);
   }
 });
+//-------------------------step 8-----------------------------------------//
+//       /movies/add?title=<TITLE>&year=<YEAR>&rating=<RATING>            //
+//------------------------------------------------------------------------//
+app.get('/movies/add', (req, res) => {
+  const newTitle=req.query.title;
+  const newYear= parseInt(req.query.year);
+  const newRating=req.query.rating;
+  const allMovies={data:movies};
+  if(newTitle==""||newTitle==undefined||  //missing title
+     newYear==""||newYear==undefined||    //missing year
+     newYear<1000||newYear>9999||(!newYear)){  //unacceptable year value
+    res.status(200).send({error:true+" You cannot create a movie without providing s title and a year "});
+  }else if(newRating==""||newRating==undefined){
+   
+   movies.push({title:newTitle,year:newYear,rating:4})
+   res.status(200).send(allMovies);
+  }
+  else{
+  movies.push({title:newTitle,year:newYear,rating:newRating})
+    res.status(200).send(allMovies);
+  }
+  
+});
 
-//-------------------Global Compare Function-------------------------------------------- 
-
-//const sortByRating=
-//--------------------------sorting  data-------------------------------
 
 
-//   app.get('/movies/read', (req, res) => {
-//    // const sortByDate=
 
-//   if (req.query.s=="by-date"){
-//     console.log(sortByDate)
-//     //const date=sortByDate;
-//       res.status(200).send('Sort By Date'+movies.sort((a,b)=>(a.year>b.year)?1:-1));
 
-//   }else if (req.query.s=="by-rating"){  
-//     console.log(sortByRating)
-//       const rating=sortByRating;
-//     res.status(200).send('Sort By Rating '+movies.sort((a,b)=>(a.rating>b.rating)?1:-1));
-//    }
-// else{
-//     res.status(500).send('you have to provide a search');
-//    }
-
-//    });
 
 
 
