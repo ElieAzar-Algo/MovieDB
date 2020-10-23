@@ -1,4 +1,6 @@
 const e = require('express');
+const bodyParser = require('body-parser');
+
 // import express (after npm install express)
 const express = require('express');
 const {
@@ -7,11 +9,11 @@ const {
 
 // create new express app and save it as "app"
 const app = express();
-
+app.use(bodyParser.json());
 // server configuration
 const PORT = 3000;
 
-// create a route for the app
+// create a route for the apps
 app.get('/', (req, res) => {
   res.send('ok');
 });
@@ -88,7 +90,7 @@ app.get('/movie/read/:action', (req, res) => {
 //                     /movies/read/id/<ID>                               //
 //------------------------------------------------------------------------//
 
-app.get('/movies/read/id/:id', (req, res) => {
+app.get('/movies/:id', (req, res) => {
   let id=(req.params.id)-1;
   if(!movies[id]){
   res.status(404).send({error:true,message:"the movie "+(id+1)+' does not exist '});}
@@ -99,10 +101,10 @@ app.get('/movies/read/id/:id', (req, res) => {
 //-------------------------step 8-----------------------------------------//
 //       /movies/add?title=<TITLE>&year=<YEAR>&rating=<RATING>            //
 //------------------------------------------------------------------------//
-app.get('/movies/add', (req, res) => {
-  const newTitle=req.query.title;
-  const newYear= parseInt(req.query.year);
-  const newRating=req.query.rating;
+app.post('/movies', (req, res) => {
+  const newTitle=req.body.title;
+  const newYear= parseInt(req.body.year);
+  const newRating=req.body.rating;
   const allMovies={data:movies};
   if(newTitle==""||newTitle==undefined||  //missing title
      newYear==""||newYear==undefined||    //missing year
@@ -123,7 +125,7 @@ app.get('/movies/add', (req, res) => {
 //--------------------------------------step 9-----------------------------------------//
 //                               movies/delete/<ID>                                    //
 //-------------------------------------------------------------------------------------//
-app.get('/movies/delete/:id', (req, res) => {
+app.delete('/movies/:id', (req, res) => {
   let id=(req.params.id)-1;
   const allMovies={data:movies};
   if(!movies[id]){
@@ -138,11 +140,11 @@ app.get('/movies/delete/:id', (req, res) => {
 ///movies/update/<ID>?title=<NEW_TITLE>  /movies/update/<ID>?title=<NEW_TITLE>&rating=<NEW_RATING> //
 //-------------------------------------------------------------------------------------------------//
 
-app.get('/movies/update/:id', (req, res) => {
+app.put('/movies/:id', (req, res) => {
   const selectId=(req.params.id)-1;
-  const newTitle=req.query.title;
-  const newRating=req.query.rating;
-
+   const newTitle=req.body.title;
+   const newRating=req.body.rating;
+  //console.log(req.body.title);
 
   if(!movies[selectId]){
     res.status(404).send({error:true,message:"the movie "+(selectId+1)+' does not exist '});}
